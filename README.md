@@ -16,7 +16,9 @@ Reduction of computation costs associated with large CORE and RAM usage for *OOM
 - [Bash](https://pt.wikipedia.org/wiki/Bash)
 
 ## Features
-Allows automation of simulations for multiple domains. Performs verifications on input files. It kills the container in the case of **MPI ABORT**.
+Allows automation of simulations for multiple domains. Performs verifications on input files. It kills the container in the case of **MPI ABORT**. 
+
+For more detailed info, consult [documentation](WRF-documentation.pdf).
 
 The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` have the same contents, but the first is a compressed and improved version of the first one. Of the **32GB** around **20GB** comes from `WPS_GEOG` geographical data. 
 
