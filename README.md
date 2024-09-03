@@ -1,5 +1,5 @@
 ## Processing of WRF simulations with Docker containers in Azure cloud environment
-Running WRF simulation on a local or Virtual Machine takes up a **lot** of resources and requires above-average computers. Using docker allows a reduction in resources as well as the possibility of migrating containers into cloud environments, like *MS AZURE CLOUD*.
+Running WRF simulation on a local or Virtual Machine takes up a **lot** of resources and requires above-average computers. Using docker allows a reduction in resources, as well as the possibility of migrating containers into cloud environments, like *[MS AZURE CLOUD](https://azure.microsoft.com/en-us)*.
 
 ## Motivation
 Reduction of computation costs associated with large CORE and RAM usage for *OOM*.
@@ -34,10 +34,11 @@ Geographical data can be retrieved from [here](https://www2.mmm.ucar.edu/wrf/use
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
 - Example files are listed below. Change `instructions.txt` *processors* value for an adequate value;
 
-## Input file example
-- All necessary files are [here](Necessary_input_files/);
-The number of processors should be changed [here](Necessary_input_files/instructions.txt)
-- All other aspects must be changed in the remaining files.
+## Input files documentation
+For information about the input files, click [here](Necessary_input_files/).
+
+## Internal functions documentation 
+For information about the internal functions, purpose and future changes, click [here](CONFIGS/).
 
 ## How to use?
 - In main folder `./run.sh -e START_DATE=2024-09-01 -e END_DATE=2024-09-01_03:00:00`. Date format is either **%Y-%m-%d** or **%Y-%m-%d_%H:00:00** -> Time intervals must be multiples of 3h for *forecast mode* and 6h for *historic mode*;
@@ -51,8 +52,3 @@ For a quick test, try the input files, changing **max_dom=2** to 1 in `wps_input
 <b>Made by:</b>
 - Luís Fernando Nóbrega
 - Ricardo Faria
-
-## License
-A short snippet describing the license (MIT, Apache etc)
-
-MIT © [Fernando]()
