@@ -17,7 +17,13 @@ Reduction of computation costs associated with large CORE and RAM usage for *OOM
 - [Bash](https://pt.wikipedia.org/wiki/Bash)
 
 ## Features
-Allows automation of simulations for multiple domains. Performs verifications on input files. Kills container in case of **MPI ABORT**.
+Allows automation of simulations for multiple domains. Performs verifications on input files. It kills the container in the case of **MPI ABORT**.
+
+The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` have the same contents, but the first is a compressed and improved version of the first one. Of the **32GB** around **20GB** comes from `WPS_GEOG` geographical data. 
+
+The current resolution is 30 arc seconds. For reduced resolution, delete `lai_modis_30s` **(11 GB)** e `varsso` **(2.5GB)**, change `WPS-*/geogrid/GEOGRID.TBL.ARW` and alter *default:lai_modis_30s* for desired resolution. Ex: *default:lai_modis_10m*
+
+Geographical data can be retrieved from [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
 
 ## Installation
 <b>After downloading `reduced_wrf_image.tar.gz` *(3.3GB)* or `wrf_image.tar.gz` *(22.3 GB)* from SSD:</b>
