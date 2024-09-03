@@ -1,0 +1,36 @@
+############## READ ME
+# forecast data from "Data Transfer: NCEP GFS Forecasts (0.25 degree grid)" -> Data until 10days back
+# most recent forecast data available -> 6h before current date (updated at 6,12,18,24 h) -> max forecast -> 384h -> aprox 14days
+#
+# historic data from "NCEP GDAS/FNL 0.25 Degree Global Tropospheric Analyses and Forecast Grids" -> Data until 10 years back
+# most recent historic data available -> 48h before current date 
+############## For both setups (historic or forecast)
+
+year=2024
+month=8
+day=1
+
+processors=4
+mode=historic
+
+############## For forecast 
+# left & right -> latitude (min:0 max:360)
+# top & bot -> longitude (min:-90 max:90) -> top > bot
+
+hour=0
+left=-25
+right=10
+top=53
+bot=25
+forecast=3
+jump=3
+
+############## For historic 
+# final_day -> whole day + 00h.file from next day will be copied
+# Ex: day -> 13 & final_day -> 14 -> all files from 13, 14 + file at 00 from 15
+# for data of just 1 entire day -> day same as final_day
+# hour_jump is always 6h in this mode 
+
+final_year=2024
+final_month=8
+final_day=1
