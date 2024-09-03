@@ -34,8 +34,8 @@ Geographical data can be retrieved from [here](https://www2.mmm.ucar.edu/wrf/use
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
 - Example files are listed below. Change `instructions.txt` *processors* value for an adequate value;
 
-## Input files documentation
-For information about the input files, click [here](Necessary_input_files/).
+## Input files and host environment documentation
+For information about the input files or *Azure Cloud* setup, click [here](HOST/).
 
 ## Internal functions documentation 
 For information about the internal functions, purpose and future changes, click [here](CONFIGS/).
