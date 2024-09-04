@@ -67,6 +67,21 @@ This is the most complex file that includes all **&physics** and **&dynamics** i
 ```
 
 ## Nested domain rules
+When working with nested domains it is necessary to follow several steps to ensure compatability. If there requirements arren't met, [core_calc.py](/core_calc.py) will throw an error. If the dimensions are correct, you should see something similar to this:
+```
+Valid nested domain sizes: 2 domains in use
+```
+
+![Image](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/_images/wps_ij_parent_start.png)
+
+<b> Rules to follow </b>
+- `Parent domain needs to encapsulate the others` -> Ex: if **parent_id** = 1,1,2,3 all nested domains would be totally inside the previous one but if instead **parent_id** = 1,1,2,3,2 the fifth domain **can't** need to be inside the third, only the second;
+- `Parent grid ratio of child can't be bigger thant the parent's domain` -> **parent_grid_ratio** = 1,3,5,5;
+- `e_we and e_sn must match parent_grid_ratio` -> if **parent_grid_ratio** is 3, then **e_we** has to be a multiple of **3**, plus 1, as all grids start locally on (i,j) = (1,1). Ex: 31, 34, etc.. are valid.
+- `Nested domains must fit in parent domain` -> Ex: if **e_we** = 100 and **i_parent_start** = 30 with a **parent_grid_ratio** = 3, then as there are 70 tiles left, the max **e_we** of nested domain is 70*3 = 210; 
+
+For more info about [nesting](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html#wps-nested-domains).
+
 
 ## Debugging 
 In 90% of cases, failures such as **MPI ABORT** happens because of incorrect input file information. As [run.sh](/run.sh) executes, a *logfile* is printed in the host console. It usually contains all information necessary to correct the error.
@@ -92,6 +107,45 @@ In 90% of cases, failures such as **MPI ABORT** happens because of incorrect inp
 
 # Azure Cloud setup
 
-Jesus is the way
+The first step is to configure the local **VM** environment:
+```
+az login
+
+az group create -- name myResearchGroup --location eastus
+
+az vm create \\
+    -- resource-group my ResearchGroup \\
+    -- name myVM \\
+    -- image UbuntuLTS \\
+    -- size Standard_D32ls_v5 \\
+    -- admin-username azureuser \\
+    -- generate-shh-keys
+```
+
+Then the image needs to be saved to local environment, loaded, ran and stopped:
+
+```
+docker save -o mydockerimage.tar.gz 
+
+scp mydockerimage.tar.gz azureuser@<vm-public-ip>:/home/azureuser/
+
+docker load mydockerimage.tar.gz
+
+docker run -d --name mycontainer -e START_DATE=2023-01-01 -e END_DATE=2023-01-28 \\
+-v /mnt/data:/app/data myCOntainerRegistry.azurecr.io/mydockerimage
+
+az vm stop- --resource-group myResourceGroup --name myVM
+
+az vm delete --resource-group myResourceGroup --name myVM --yes --no-wait
+
+```
+
+Finally, check output logs and download the data:
+
+```
+docker logs mycontainer
+
+scp azureuser@<vm-public-ip>:/path/to/data /local/path
+```
 
 [def]: HOST/
