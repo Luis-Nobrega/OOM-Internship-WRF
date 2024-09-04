@@ -164,7 +164,7 @@ For a quick test, try the input files, changing **max_dom=2** to 1 in `wps_input
 For information about the input files or *Azure Cloud* setup, click [here](HOST/).
 
 ## Internal functions documentation 
-For information about the internal functions, purpose, future changes, and [core_calc.py](/core_calc.py) extra info click [here](CONFIGS/).
+For information about the internal functions, purpose, future changes, [dockerfile](/CONFIGS/Dockerfile) and [core_calc.py](/core_calc.py) extra info click [here](CONFIGS/).
 
 ## Credits
 <b>Made by:</b>
