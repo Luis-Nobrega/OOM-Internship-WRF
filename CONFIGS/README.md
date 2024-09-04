@@ -83,7 +83,7 @@ To add new geographical files, click [here](https://www2.mmm.ucar.edu/wrf/users/
 - orogwd_1deg 
 - orogwd_30m 
 - orogwd_20m 
-- lai_modis_10m;
+- lai_modis_10m
 
 ## Future modifications 
 
