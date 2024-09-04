@@ -1,4 +1,4 @@
-## Internal Docker files
+# Internal Docker files
 
 All the provided files sit inside the `reduced_ubuntu_image` container in the `CONFIGS` folder. They are responsible for downloading, altering and delivering data in the appropriate time and place to **WRF** system.
 
