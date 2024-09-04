@@ -12,6 +12,20 @@ All the provided files sit inside the `reduced_ubuntu_image` container in the `C
 - `forecast_download.py` -> downloads [gfs files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl); 
 - `historic_download.py` -> downaloads [gfs files](https://rda.ucar.edu/datasets/d083003/dataaccess/#).
 
+## core_calc.py 
+This is by far the most important file as it performs all the necessary formating and checks prior to running.
+<b>Actions performed</b>
+- Formats [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt) time variables;
+- Formats almost the entirety of [instructions.txt](/HOST/instructions.txt);
+- Calculates and limits proper [processor](https://forum.mmm.ucar.edu/threads/choosing-an-appropriate-number-of-processors.5082/) usage;
+- Compares matching terms in [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt) and **warns** about mismatches;
+- Checks nested domains size and position validiy;
+- Determines operation mode based on given `START_DATE` and `END_DATE`;
+- Calculates approximate coordinate domain for simulation if in `forecast` mode;
+- Checks for the presence of sensitive directories such as `/home/swe/Build_WRF/WPS-4.6.0/METGRIB_FILES`.
+
+Always verify the script feedback before advancing. Just because it didn't `raise ValueError(...)` it doesn't mean that the input values are correct.
+
 ## Dockerfile and package installation
 The [`Dockerfile`](/CONFIGS/Dockerfile) was used to create the container through `$dockerbuild`. It downloads a series of packages using *one* `RUN` statement. This ensures that only *one* layer is created. Altough image saving times might be higher, the disk usage is almost reduced by **half**. The same is true for `ENV` statement.
 
