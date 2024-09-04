@@ -3,8 +3,6 @@ Running WRF simulation on a local or Virtual Machine takes up a **lot** of resou
 
 ## Motivation
 Reduction of computation costs associated with large CORE and RAM usage for *OOM*.
-
-## Screenshots
 ![OOM logo](https://oom.arditi.pt/assets/OOM_Logo.png)
 
 ## Tech/framework used
