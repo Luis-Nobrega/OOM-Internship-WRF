@@ -17,7 +17,7 @@ You are exceeding the maximum number of processors 16: by using 40. Are you sure
 The core boundaries were based on [this](https://forum.mmm.ucar.edu/threads/choosing-an-appropriate-number-of-processors.5082/) forum.
 
 ## wps_input.txt
-The [wps_input.txt](/HOST/wps_input.txt) file is the file commonly known as `namelist.wps` that sits inside the **WPS** folder. It is responsible for the `geogrid`, `ungrib` and `metgrib` instances. 
+The [wps_input.txt](/HOST/wps_input.txt) file is the file commonly known as `namelist.wps` that sits inside the `WPS-4.6.0/` folder. It is responsible for the `geogrid`, `ungrib` and `metgrib` instances. 
 
 All the date related **keywords** are automatically altered by [core_calc.py](/core_calc.py), which includes **start_date**, **end_date** and **interval_seconds**. Therefore, everything else, especially **max_dom** (for choosing nested domains), must be manually altered.
 
