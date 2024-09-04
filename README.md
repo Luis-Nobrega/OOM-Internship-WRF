@@ -104,10 +104,11 @@ nano geogrid/GEOGRID.TBL
 
 All resolution files can be altered in:
 ```
-cd --
-cd Build_WRF/WPS_GEOG/
+Build_WRF/WPS_GEOG/
 ```
+Your internal structure should look like this:
 
+![image](/scheme.png)
 ## Saving the image after editing
 After everything is setup, list the containers and get the CONTAINER ID:
 ```
