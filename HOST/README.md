@@ -4,13 +4,13 @@ In order to adapt your simulation to your needs, input files must be changed acc
 ## instructions.txt
 The [intructions.txt](/HOST/instructions.txt) file is responsible for expressing time and mode information in a more readable way for the user and other scripts. Every **keyword**, except `processors` is automatically changed by [core_calc.py](/core_calc.py).
 
-After running [core_calc.py](/core_calc.py), a interval such as:
+After running [core_calc.py](/core_calc.py), an interval will appear:
 ```
 MIN processors: 1
 MAX processors: 16
 Now using: 4 
 ```
-The program will throw an error if the requested cores are lower than the **minimum**, however if the **maximum** is exceeded, user input will be required to continue. It is **not** recommended to exceed the maximum `processors` unless the simulation is failing due to low processor count. 
+The program will throw an error if the requested cores are lower than the **minimum**, however, if the **maximum** is exceeded, user input will be required to continue. It is **not** recommended to exceed the maximum `processors` unless the simulation is failing due to a low processor count. 
 ```
 You are exceeding the maximum number of processors 16: by using 40. Are you sure? y/n
 ```
@@ -67,7 +67,7 @@ This is the most complex file that includes all **&physics** and **&dynamics** i
 ```
 
 ## Nested domain rules
-When working with nested domains it is necessary to follow several steps to ensure compatability. If there requirements arren't met, [core_calc.py](/core_calc.py) will throw an error. If the dimensions are correct, you should see something similar to this:
+When working with nested domains it is necessary to follow several steps to ensure compatability. If their requirements aren't met, [core_calc.py](/core_calc.py) will throw an error. If the dimensions are correct, you should see something similar to this:
 ```
 Valid nested domain sizes: 2 domains in use
 ```
@@ -76,24 +76,24 @@ Valid nested domain sizes: 2 domains in use
 
 <b> Rules to follow </b>
 - `Parent domain needs to encapsulate the others` -> Ex: if **parent_id** = 1,1,2,3 all nested domains would be totally inside the previous one but if instead **parent_id** = 1,1,2,3,2 the fifth domain **can't** need to be inside the third, only the second;
-- `Parent grid ratio of child can't be bigger thant the parent's domain` -> **parent_grid_ratio** = 1,3,5,5;
+- `Parent grid ratio of a child can't be bigger than the parent's domain` -> **parent_grid_ratio** = 1,3,5,5;
 - `e_we and e_sn must match parent_grid_ratio` -> if **parent_grid_ratio** is 3, then **e_we** has to be a multiple of **3**, plus 1, as all grids start locally on (i,j) = (1,1). Ex: 31, 34, etc.. are valid.
-- `Nested domains must fit in parent domain` -> Ex: if **e_we** = 100 and **i_parent_start** = 30 with a **parent_grid_ratio** = 3, then as there are 70 tiles left, the max **e_we** of nested domain is 70*3 = 210; 
+- `Nested domains must fit in parent domain` -> Ex: if **e_we** = 100 and **i_parent_start** = 30 with a **parent_grid_ratio** = 3, then as there are 70 tiles left, the max **e_we** of the nested domain is 70*3 = 210; 
 
 For more info about [nesting](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html#wps-nested-domains).
 
 
 ## Debugging 
-In 90% of cases, failures such as **MPI ABORT** happens because of incorrect input file information. As [run.sh](/run.sh) executes, a *logfile* is printed in the host console. It usually contains all information necessary to correct the error.
+In 90% of cases, failures such as **MPI ABORT** happen because of incorrect input file information. As [run.sh](/run.sh) executes, a *logfile* is printed in the host console. It usually contains all the information necessary to correct the error.
 
 <b>Possible *internal* error causes:</b>
 - **topo_wind** is not set to `0` in [wrf_input.txt](/HOST/wrf_input.txt) for nested domains;
 - Weak [internet speed](https://fast.com/pt/) caused `gfs` download failure; 
 - Data sources discontinued -> [forecast](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl) or [historic](https://rda.ucar.edu/datasets/d083003/dataaccess/#);
-- Dowload request was too big. Use a smalled time period as `gfs` files can take up to 500 MB each (worst case);
-- Invalid extra paramethers that require extra configuration added;
-- Unmathcing **keywords** in wps and wrf input files;
-- Missing mandatory paramethers or delted keywords;
+The download request was too big. Use a smaller period as `gfs` files can take up to 500 MB each (worst case);
+- Invalid extra parameters that require extra configuration added;
+- Unmathcing **keywords** in WPS and WRF input files;
+- Missing mandatory parameters or deleted keywords;
 - Skill issue;
 
 
@@ -140,7 +140,7 @@ az vm delete --resource-group myResourceGroup --name myVM --yes --no-wait
 
 ```
 
-Finally, check output logs and download the data:
+Finally, check the output logs and download the data:
 
 ```
 docker logs mycontainer
