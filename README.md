@@ -16,7 +16,7 @@ Reduction of computation costs associated with large CORE and RAM usage for *OOM
 ## Features
 Allows automation of simulations for multiple domains. Performs verifications on input files. It kills the container in the case of **MPI ABORT**. For more detailed info, consult [documentation](WRF-documentation.pdf).
 
-A private image may be provided upon request. The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` have the same contents, but the first one is a compressed and improved version of the second one. In the compressed version, of the **32GB**, around **20GB** comes from `WPS_GEOG` geographical data. 
+A private image may be provided upon request. The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` have the same contents, but the first one is a compressed and improved version of the second one. In the unzipped reduced version, of the **32GB**, around **20GB** comes from `WPS_GEOG` geographical data. 
 
 The current resolution is 30 arc seconds. For reduced resolution, delete `lai_modis_30s` **(11 GB)** e `varsso` **(2.5GB)**, edit `WPS-*/geogrid/GEOGRID.TBL` and alter *default:lai_modis_30s* for desired resolution. Ex: *default:lai_modis_10m*
 
@@ -67,9 +67,9 @@ apt-get update
 apt install pip
 pip install requests
 ```
-### Seting up the interior of the container
+### Setting up the interior of the container
 
-Setup executables in CONFIGS folder. The files can be found [here](/CONFIGS/).
+Set up executables in the CONFIGS folder. The files can be found [here](/CONFIGS/).
 ```
 cd Build_WRF/
 mkdir CONFIGS
@@ -93,7 +93,7 @@ mkdir METGRIB_FILES
 ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
 ```
 
-If you need to change simulation resolution, change `GEOGRID.TBL`.
+If you need to change the simulation resolution, change `GEOGRID.TBL`.
 
 Sections will be divided by '=====' and have names such as **name=LANDUSEF**. To change resolution, find: rel_path = default:**topo_gmted2010_30s**/ and change the **bold** term to the correct file.
 ```
@@ -124,11 +124,11 @@ If some step that [forecast.sh](/CONFIGS/forecast.sh) doesn't automatically exec
 
 Testing is recommended prior to exiting. Please alter the input files to run 1 domain (alter **max_dom** in input files) and add some **GFS** [files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl) to `/Build_WRF/WPS-4.6.0/GRIB_FILES`. You can add them with `wget`.
 
-Run `forecast.sh` and check for errors. Logfiles contain all info for eventual missing paramethers.
+Run `forecast.sh` and check for errors. Logfiles contain all info for eventual missing parameters.
 
 For additional debugging consult [WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html) or [WRF](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/running_wrf.html).
 
-## Seting up the local environment 
+## Setting up the local environment 
 
 In a local directory (outside of container), add [run.sh](/run.sh), [core_calc.py](/core_calc.py), [instructions.txt](/HOST/instructions.txt), [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt).
 
