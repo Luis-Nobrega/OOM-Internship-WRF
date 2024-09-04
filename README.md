@@ -170,3 +170,7 @@ For information about the internal functions, purpose and future changes, click 
 <b>Made by:</b>
 - Luís Fernando Nóbrega
 - Ricardo Faria
+
+<b>A big thanks to:</b>
+- Jesus Reis
+- Rui Vieira
