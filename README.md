@@ -26,13 +26,90 @@ The current resolution is 30 arc seconds. For reduced resolution, delete `lai_mo
 
 Geographical data can be retrieved from [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
 
-## Installation
+## Installation if docker image was provided by OOM
 <b>After downloading `reduced_wrf_image.tar.gz` *(3.3GB)* or `wrf_image.tar.gz` *(22.3 GB)* from SSD:</b>
 
 - `docker load` -i /path/to/`reduced_wrf_image.tar.gz` -> This normally takes *15 minutes* for `reduced_wrf_image.tar.gz` and over an hour for `wrf_image.tar.gz`;
-- On your **WDIR** install: `core_calc`;
+- On your **WDIR** install: `core_calc` and give it extra premissions with  `sudo chmod +x run.sh`;
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
 - Example files are listed below. Change `instructions.txt` *processors* value for an adequate value;
+
+## Installation if Docker image wasn't provided
+
+### Starting Docker image
+
+Check if docker is installed.
+```
+$ docker ps
+```
+If not, install it [here](https://docs.docker.com/engine/install/).
+
+Start the docker container with the provided [Dockerfile](/CONFIGS/Dockerfile) in your desired directory. This may take some minutes.
+```
+$ docker build Dockerfile
+```
+
+Download and execute the proper installation script [WRF4.6.0_Install.bash](https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash). This will take about an hour and 50 GB of space.
+```
+$ bash WRF4.6.0_Install.bash
+```
+
+### Install other dependencies
+In order for downloads to work:
+```
+apt-get update
+apt install pip
+pip install requests
+```
+### Seting up the interior of the container
+
+Setup executables in CONFIGS folder. The files can be found [here](/CONFIGS/).
+```
+$ cd Build_WRF/
+$ mkdir CONFIGS
+$ cd CONFIGS/
+$ ls 
+forecast_download.py  forecast.sh  historic_download.py  instructions.txt  model_set.py  namelist_editer.py  processors.py  wps_input.txt  wrf_input.txt
+```
+Give permissions to `forecast.sh`:
+```
+$ chmod +x forecast.sh
+```
+
+Alter `WPS` directory:
+```
+$ cd --
+$ cd Build_WRF/WPS-4.6.0/
+$ mkdir GRIB_FILES
+$ mkdir METGRIB_FILES
+$ ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
+```
+
+If you need to change simulation resolution, change `GEOGRID.TBL`.
+
+Sections will be divided by '==' and have names such as **name=LANDUSEF**. To change resolution, find:rel_path = default:**topo_gmted2010_30s**/ and change the **bold** term to the correct file.
+```
+$ nano geogrid/GEOGRID.TBL
+```
+
+All resolution files can be altered in:
+```
+cd --
+cd Build_WRF/WPS_GEOG/
+```
+
+### Saving the image 
+After everything 
+
+### Seting up 
+
+
+
+
+
+
+
+## Saving a Docker image after editing
 
 ## Input files and host environment documentation
 For information about the input files or *Azure Cloud* setup, click [here](HOST/).
