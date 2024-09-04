@@ -45,7 +45,7 @@ geog_data_path='../WPS_GEOG/',
 
 ## wrf_input.txt 
 
-The [wrf_input.txt](/HOST/wrf_input.txt) is commonly known as the `namelist.input` file that sits inside de **WRF** folder. It is responsible for `real.exe` and `wrf.exe` instances. 
+The [wrf_input.txt](/HOST/wrf_input.txt) is commonly known as the `namelist.input` file that sits inside the `WRF-4.6.0-ARW/test/em_real/` folder. It is responsible for `real.exe` and `wrf.exe` instances. 
 
 All the date related **keywords** are automatically altered by [core_calc.py](/core_calc.py). This includes every **keyword** before **interval_seconds** (inclusively). 
 
