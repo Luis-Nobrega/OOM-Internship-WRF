@@ -28,7 +28,7 @@ Updated geographical data can be retrieved from [here](https://www2.mmm.ucar.edu
 - `docker load` -i /path/to/`reduced_wrf_image.tar.gz` -> This normally takes *15 minutes* for `reduced_wrf_image.tar.gz` and over an hour for `wrf_image.tar.gz`;
 - On your **WDIR** install: `core_calc` and give it extra premissions with  `sudo chmod +x run.sh`;
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
-- Example files are listed below. Change `instructions.txt` *processors* value for an adequate value;
+- Example files are listed below. Change `instructions.txt` **processors** for an adequate value;
 
 ## Installation if Docker image wasn't provided
 
