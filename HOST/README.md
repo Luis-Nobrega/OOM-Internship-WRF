@@ -98,7 +98,7 @@ The download request was too big. Use a smaller period as `gfs` files can take u
 
 
 <b>Useful information for debugging namelists:</b>
-- [Documentation](WRF-documentation.pdf)
+- [Documentation](/WRF-documentation.pdf)
 - [Running WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html)
 - [Running WRF](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/running_wrf.html)
 - [WPS namelist variables](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/namelist_variables.html)
