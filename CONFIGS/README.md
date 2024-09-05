@@ -12,7 +12,7 @@ All the provided files that sit inside the `reduced_ubuntu_image` container are 
 - `forecast_download.py` -> downloads [gfs files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl); 
 - `historic_download.py` -> downaloads [gfs files](https://rda.ucar.edu/datasets/d083003/dataaccess/#).
 
-## core_calc.py  ![In Progress](https://img.shields.io/badge/status-in_progress-yellow)
+## core_calc.py ![Completed](https://img.shields.io/badge/status-completed-brightgreen)
 This is by far the most important external file as it performs all the necessary formating and checks prior to running.
 
 <b>Actions performed:</b>
