@@ -1,5 +1,5 @@
 # Input files 
-In order to adapt your simulation to your needs, input files must be changed according to *WRF* rules.
+In order to adapt a simulation to your needs, input files must be changed according to *WRF* rules.
 
 ## instructions.txt
 The [intructions.txt](/HOST/instructions.txt) file is responsible for expressing time and mode information in a more readable way for the user and other scripts. Every **keyword**, except `processors` is automatically changed by [core_calc.py](/core_calc.py).
@@ -19,7 +19,7 @@ The core boundaries were based on [this](https://forum.mmm.ucar.edu/threads/choo
 ## wps_input.txt
 The [wps_input.txt](/HOST/wps_input.txt) file is the file commonly known as `namelist.wps` that sits inside the `WPS-4.6.0/` folder. It is responsible for the `geogrid`, `ungrib` and `metgrib` instances. 
 
-All the date related **keywords** are automatically altered by [core_calc.py](/core_calc.py), which includes **start_date**, **end_date** and **interval_seconds**. Therefore, everything else, especially **max_dom** (for choosing nested domains), must be manually altered.
+All the time related **keywords** are automatically altered by [core_calc.py](/core_calc.py), which includes **start_date**, **end_date** and **interval_seconds**. Therefore, everything else, especially **max_dom** (for choosing nested domains), must be **manually** altered.
 
 The *file_section* that usually suffers modifications is **&geogrid**, and typically looks like this:
 ```
@@ -49,7 +49,7 @@ The [wrf_input.txt](/HOST/wrf_input.txt) is commonly known as the `namelist.inpu
 
 All the date related **keywords** are automatically altered by [core_calc.py](/core_calc.py). This includes every **keyword** before **interval_seconds** (inclusively). 
 
-This is the most complex file that includes all **&physics** and **&dynamics** instructions. Between similar simulations, the most commonly **keywords** include **max_dom** **e_sn** and **e_we**. The most changed part is this:
+This is the most complex file that includes all **&physics** and **&dynamics** instructions. Between similar simulations, the most commonly altered **keywords** include **max_dom** **e_sn** and **e_we**. The most changed part is this:
 
 ```
  max_dom                             = 1,                                                                          
@@ -74,7 +74,7 @@ Valid nested domain sizes: 2 domains in use
 
 ![Image](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/_images/wps_ij_parent_start.png)
 
-<b> Rules to follow </b>
+<b> Rules to follow </b> 
 - `Parent domain needs to encapsulate the others` -> Ex: if **parent_id** = 1,1,2,3 all nested domains would be totally inside the previous one but if instead **parent_id** = 1,1,2,3,2 the fifth domain **can't** need to be inside the third, only the second;
 - `Parent grid ratio of a child can't be bigger than the parent's domain` -> **parent_grid_ratio** = 1,3,5,5;
 - `e_we and e_sn must match parent_grid_ratio` -> if **parent_grid_ratio** is 3, then **e_we** has to be a multiple of **3**, plus 1, as all grids start locally on (i,j) = (1,1). Ex: 31, 34, etc.. are valid.
@@ -91,10 +91,11 @@ In 90% of cases, failures such as **MPI ABORT** happen because of incorrect inpu
 - Weak [internet speed](https://fast.com/pt/) caused `gfs` download failure; 
 - Data sources discontinued -> [forecast](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl) or [historic](https://rda.ucar.edu/datasets/d083003/dataaccess/#);
 The download request was too big. Use a smaller period as `gfs` files can take up to 500 MB each (worst case);
-- Invalid extra parameters that require extra configuration added;
+- Invalid extra parameters that require extra configuration added without proper notice;
 - Unmathcing **keywords** in WPS and WRF input files;
 - Missing mandatory parameters or deleted keywords;
-- Skill issue;
+- Upon copying a namelist, forgot to specify the custom directories correctly (such as `GRIB_FILES`).
+- Incomplete configuration;
 
 
 <b>Useful information for debugging namelists:</b>
@@ -106,6 +107,8 @@ The download request was too big. Use a smaller period as `gfs` files can take u
 - [General info](https://www.mmm.ucar.edu/models/wrf)
 
 # Azure Cloud setup
+![Future](https://img.shields.io/badge/status-future-lightgrey)
+![Idea](https://img.shields.io/badge/status-idea-blue)
 
 The first step is to configure the local **VM** environment:
 ```

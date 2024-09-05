@@ -22,7 +22,7 @@ The current simulation resolution is 30 arc seconds. For reduced resolution, del
 
 Updated geographical data can be downloaded to the `WPS_GEOG` folder from [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
 
-## Installation if docker image was provided by OOM
+## Installation if docker image was provided by OOM ![Completed](https://img.shields.io/badge/status-completed-brightgreen)
 <b>After downloading `reduced_wrf_image.tar.gz` *(3.3GB)* or `wrf_image.tar.gz` *(22.3 GB)* from SSD:</b>
 
 - `docker load` -i /path/to/`reduced_wrf_image.tar.gz` -> This normally takes *15 minutes* for `reduced_wrf_image.tar.gz` and over an hour for `wrf_image.tar.gz`;
@@ -32,7 +32,7 @@ Updated geographical data can be downloaded to the `WPS_GEOG` folder from [here]
 
 Continue installation [process](https://github.com/Luis-Nobrega/OOM-Internship-WRF/blob/main/README.md#saving-the-image-after-editing).
 
-## Installation if Docker image wasn't provided
+## Installation if Docker image wasn't provided ![Experimental](https://img.shields.io/badge/status-experimental-purple)
 
 ### Starting Docker image
 
@@ -52,7 +52,9 @@ Enter the container in interactive mode:
 docker run -it my_image_name
 ```
 
-Download and execute the proper installation script [WRF4.6.0_Install.bash](https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash). **This will take about an hour and 50 GB of space**! (Reduced to 30GB after deleting tar.gz).
+![Danger](https://img.shields.io/badge/status-danger-red)
+
+Download and execute the proper installation script [WRF4.6.0_Install.bash](https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash). **This will take about an hour and 50 GB of space**! (Reduced to 30GB after deleting tar.gz). 
 ```
 bash WRF4.6.0_Install.bash
 ```
@@ -109,7 +111,7 @@ Build_WRF/WPS_GEOG/
 Your internal structure should look like this:
 
 ![image](/scheme.png)
-## Saving the image after editing
+## Saving the image after editing ![Completed](https://img.shields.io/badge/status-completed-brightgreen)
 After everything is set up, list the containers and get the CONTAINER ID:
 ```
 exit
@@ -172,6 +174,20 @@ For information about the input files or *Azure Cloud* setup, click [here](HOST/
 
 ## Additional function documentation 
 For information about the internal functions, purpose, future changes, [dockerfile](/CONFIGS/Dockerfile) and [core_calc.py](/core_calc.py) extra info click [here](CONFIGS/).
+
+## Visualizing wrfout* files
+
+In order to visualize a `wrfout*` file, you must have [Ncview](https://cirrus.ucsd.edu/ncview/) installed. 
+It is good practice to use:
+```
+ncview wrfout_d01_file
+```
+And check if the result is similar to:
+
+![ncview](https://cirrus.ucsd.edu/ncview/)
+
+Note that if you close any window with the `x` symbol, all other windows will close. Minimizing is the way.
+
 
 ## Credits
 <b>Made by:</b>

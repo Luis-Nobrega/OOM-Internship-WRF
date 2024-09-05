@@ -1,6 +1,6 @@
-# Internal Docker files
+# Internal Docker files/Important external files information
 
-All the provided files sit inside the `reduced_ubuntu_image` container in the `CONFIGS` folder. They are responsible for downloading, altering and delivering data in the appropriate time and place to **WRF** system.
+All the provided files that sit inside the `reduced_ubuntu_image` container are in the `CONFIGS` folder. They are responsible for downloading, altering and delivering data in the appropriate time and place to **WRF** system.
 
 ## Internal files listing 
 <b> Used files are: </b>
@@ -12,9 +12,10 @@ All the provided files sit inside the `reduced_ubuntu_image` container in the `C
 - `forecast_download.py` -> downloads [gfs files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl); 
 - `historic_download.py` -> downaloads [gfs files](https://rda.ucar.edu/datasets/d083003/dataaccess/#).
 
-## core_calc.py 
-This is by far the most important file as it performs all the necessary formating and checks prior to running.
-<b>Actions performed</b>
+## core_calc.py  ![In Progress](https://img.shields.io/badge/status-in_progress-yellow)
+This is by far the most important external file as it performs all the necessary formating and checks prior to running.
+
+<b>Actions performed:</b>
 - Formats [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt) time variables;
 - Formats almost the entirety of [instructions.txt](/HOST/instructions.txt);
 - Calculates and limits proper [processor](https://forum.mmm.ucar.edu/threads/choosing-an-appropriate-number-of-processors.5082/) usage;
@@ -29,7 +30,7 @@ Always verify the script feedback before advancing. Just because it didn't `rais
 ## Dockerfile and package installation
 The [`Dockerfile`](/CONFIGS/Dockerfile) was used to create the container through `$dockerbuild`. It downloads a series of packages using *one* `RUN` statement. This ensures that only *one* layer is created. Altough image saving times might be higher, the disk usage is almost reduced by **half**. The same is true for `ENV` statement.
 
-Aditionally other dependencies such as `pip` and the `requests` *python* package were installed.
+Aditionally other dependencies such as `pip` and the `requests` *python* package were installed in the *ubuntu22.04 OS*.
 
 
 The format of input files was chosen as **GFS** through the choosing of the right Vtable in `WPS/ungrib/Variable_Tables/Vtable.GFS` and the resolutions altered in `WPS/geogrid/GEOGRID.TBL`. 
@@ -37,7 +38,7 @@ The format of input files was chosen as **GFS** through the choosing of the righ
 There are two operating modes, **forecast** and **historic**.
 
 ### Forecast
-- Time interval for dates chosen up to 7 days prior to `UTC` time;
+- Time interval for dates chosen up to 7 days prior to `UTC` current time;
 - Can run up to 384h (16 days) after start_date;
 - Allows data retireving intervals that are multiples of 3. By default, it will try to use 6h.
 - Allows for selecting data based on the domain size and coordinates.
@@ -45,10 +46,10 @@ There are two operating modes, **forecast** and **historic**.
 ### Historic
 - Time intervals for dates later than 7 days;
 - Time limit of 9 years back;
-- Data retrieval intervals of multiples of 6h (6h is recommended);
+- Data retrieval intervals are multiples of 6h (6h is recommended);
 - Doesn't allow for selective data. GFS files will be substancially bigger in this mode (500 MB vs 50 MB);
 - Lower data volumes for older start_dates;
-- Max recommended period is one month.
+- Max recommended simulation period is one month.
 
 The operating mode is automatically chosen by [core_calc.py](/core_calc.py), based on the input dates.
 ## Data download 
@@ -60,11 +61,11 @@ Ex: if you chose to simulate from 00:00:00 to 09:00:00 in 3h intervals, there sh
 
 ## File limitations and resolution
 
-The maximum allowed resolution is *30 arc seconds*. If you desire to change it, alter the **default** keyword in `GEOGRID.TBL` to match the correct file name in `WPS_GEOG` folder. 
+The maximum allowed resolution is *30 arc seconds*. If you desire to change it, alter the **default** keyword(s) in `GEOGRID.TBL` to match the correct file name in `WPS_GEOG` folder. 
 
 To add new geographical files, click [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
 
-### Kept resolution files
+### Available resolution files (in premade image)
 - albedo_modis      	
 - lai_modis_30s 
 - modis_landuse_20class_30s_with_lakes  
@@ -75,7 +76,7 @@ To add new geographical files, click [here](https://www2.mmm.ucar.edu/wrf/users/
 - orogwd_10m   
 - soiltype_bot_30s   
 - topo_gmted2010_30s
-### Deleted resolution files
+### Deleted resolution files (in premade image)
 - varsso_10m 
 - varsso_5m 
 - varsso_2m 
@@ -85,10 +86,12 @@ To add new geographical files, click [here](https://www2.mmm.ucar.edu/wrf/users/
 - orogwd_20m 
 - lai_modis_10m
 
-## Future modifications 
+If you followed [these steps](https://github.com/Luis-Nobrega/OOM-Internship-WRF#installation-if-docker-image-wasnt-provided), all the above files are readily available.
+
+## Future modifications ![Idea](https://img.shields.io/badge/status-idea-blue)
 
 For altering the source of **GFS** files, the main function to alter is **get_links(...)** in either [historic_download.py](/CONFIGS/historic_download.py) or [forecast_download.py](/CONFIGS/forecast_download.py). 
 
-Additionally, if a new source of historic files that allows for domain subsections (choosing coordinates) to be chosen is found, new global variables have to be extracted from [instructions.txt](/HOST/instructions.txt) such as `left, right, top, bot`.
+Additionally, if a new source of historic files that allows for domain subsections (choosing coordinates) to be chosen is found, new global variables have to be extracted from [instructions.txt](/HOST/instructions.txt) such as `left, right, top, bot`. See pattern of [historic_download.py](/CONFIGS/historic_download.py) and changes will be clear.
 
-The first two lines of the `coordinates(mode)` function in [core_calc.py](/core_calc.py) must also be commented for coordinates to update.
+The first two lines of the `coordinates(mode)` function in [core_calc.py](/core_calc.py) must also be commented for coordinates to update. Right now it skips that step if **mode=historic**.
