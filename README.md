@@ -1,8 +1,8 @@
 ## Processing Weather Research & Forecasting Model (WRF) simulations with Docker containers in Azure cloud environment
-Running WRF simulation on a local or Virtual Machine takes up a **lot** of resources and requires above-average computers. Using docker allows a reduction in resources, as well as the possibility of migrating containers into cloud environments, like *[MS AZURE CLOUD](https://azure.microsoft.com/en-us)*.
+Running WRF simulation on a local or Virtual Machine takes up a **lot** of resources and requires above-average computers. Using docker allows a reduction in local resources, as well as the possibility of migrating containers into cloud environments, like *[MS AZURE CLOUD](https://azure.microsoft.com/en-us)*, that offer more processing power.
 
 ## Motivation
-Reduction of computation costs associated with large CORE and RAM usage for *OOM*.
+Reduction of computation costs associated with large CORE, RAM and SSD usage for *OOM*.
 ![OOM logo](https://oom.arditi.pt/assets/OOM_Logo.png)
 
 ## Tech/framework used
@@ -16,11 +16,11 @@ Reduction of computation costs associated with large CORE and RAM usage for *OOM
 ## Features
 Allows automation of simulations for multiple domains. Performs verifications on input files. It kills the container in the case of **MPI ABORT**. For more detailed info, consult [documentation](WRF-documentation.pdf).
 
-A private image may be provided upon request. The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` have the same contents, but the first one is a compressed and improved version of the second one. In the unzipped reduced version, of the **32GB**, around **20GB** comes from `WPS_GEOG` geographical data. 
+A private (and ready to run) image may be provided upon request. The `reduced_wrf_image.tar.gz` and `wrf_image.tar.gz` images have the same contents, but the first is a compressed and improved version of the second one. In the unzipped reduced version, of the **32GB**, around **20GB** comes from `WPS_GEOG` geographical data. 
 
-The current resolution is 30 arc seconds. For reduced resolution, delete `lai_modis_30s` **(11 GB)** e `varsso` **(2.5GB)**, edit `WPS-*/geogrid/GEOGRID.TBL` and alter *default:lai_modis_30s* for desired resolution. Ex: *default:lai_modis_10m*
+The current simulation resolution is 30 arc seconds. For reduced resolution, delete `lai_modis_30s` **(11 GB)** and `varsso` **(2.5GB)**, edit `WPS-*/geogrid/GEOGRID.TBL` and alter *default:lai_modis_30s* for desired resolution. Ex: *default:lai_modis_10m*
 
-Updated geographical data can be retrieved from [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
+Updated geographical data can be downloaded to the `WPS_GEOG` folder from [here](https://www2.mmm.ucar.edu/wrf/users/download/get_sources_wps_geog.html) or [here](http://www2.mmm.ucar.edu/wrf/src/wps_files/).
 
 ## Installation if docker image was provided by OOM
 <b>After downloading `reduced_wrf_image.tar.gz` *(3.3GB)* or `wrf_image.tar.gz` *(22.3 GB)* from SSD:</b>
@@ -28,7 +28,9 @@ Updated geographical data can be retrieved from [here](https://www2.mmm.ucar.edu
 - `docker load` -i /path/to/`reduced_wrf_image.tar.gz` -> This normally takes *15 minutes* for `reduced_wrf_image.tar.gz` and over an hour for `wrf_image.tar.gz`;
 - On your **WDIR** install: `core_calc` and give it extra premissions with  `sudo chmod +x run.sh`;
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
-- Example files are listed below. Change `instructions.txt` **processors** for an adequate value;
+- Example files are listed below. Change `instructions.txt` **processors** keyword for an adequate value;
+
+Continue installation [process](https://github.com/Luis-Nobrega/OOM-Internship-WRF/blob/main/README.md#saving-the-image-after-editing).
 
 ## Installation if Docker image wasn't provided
 
@@ -77,7 +79,7 @@ cd CONFIGS/
 ls 
 forecast_download.py  forecast.sh  historic_download.py  instructions.txt  model_set.py  namelist_editer.py  processors.py  wps_input.txt  wrf_input.txt
 ```
-Make sure you have the 9 files.
+Make sure you have all the 9 files.
 
 Give permissions to `forecast.sh`:
 ```
@@ -95,7 +97,7 @@ ln -s ungrib/Variable_Tables/Vtable.GFS Vtable
 
 If you need to change the simulation resolution, change `GEOGRID.TBL`.
 
-Sections will be divided by '=====' and have names such as **name=LANDUSEF**. To change resolution, find: rel_path = default:**topo_gmted2010_30s**/ and change the **bold** term to the correct file.
+Sections will be divided by '=====' and have names such as **name=LANDUSEF**. To change resolution, find: rel_path = default:**topo_gmted2010_30s**/ and change the **bold** term to the correct file for each of the layers you want to modify.
 ```
 nano geogrid/GEOGRID.TBL
 ```
@@ -117,12 +119,17 @@ docker commit CONTAINER_ID my_image_name
 # to list images
 docker ps -a 
 ```
+After making sure the image is there **(This can take up to 20 min on the first time)**, a container will appear. You can either restart it with `docker start container_name` or delete it with `docker rm container_name` and start in interactive mode once again with `docker run -it image_name`. The second option is safer as dangling containers occupy some GB, each.
 
-If some step that [forecast.sh](/CONFIGS/forecast.sh) doesn't automatically execute was forgotten, please consult [WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html) or [WRF](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/running_wrf.html) for detailed initialization steps.
+After entering the container in interactive mode, try to run `/.forecast.sh` in the `CONFIGS` directory after editing the 3 namelists.
 
-### Testing
+If [forecast.sh](/CONFIGS/forecast.sh) **fails**, please consult [WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html) or [WRF](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/running_wrf.html) for detailed initialization steps. 
 
-Testing is recommended prior to exiting. Please alter the input files to run 1 domain (alter **max_dom** in input files) and add some **GFS** [files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl) to `/Build_WRF/WPS-4.6.0/GRIB_FILES`. You can add them with `wget`.
+Compare `forecast.sh` with the manual steps performed and search for missing actions (Please email on of the collaborators if that is the case).
+
+### Testing the image
+
+Testing is recommended prior to local/cloud testing. Please alter the input files to run 1 domain (alter **max_dom** in input files) and add some **GFS** [files](https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25_1hr.pl) to `/Build_WRF/WPS-4.6.0/GRIB_FILES`. You can add them with `wget`.
 
 Run `forecast.sh` and check for errors. Logfiles contain all info for eventual missing parameters.
 
@@ -130,7 +137,7 @@ For additional debugging consult [WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_u
 
 ## Setting up the local environment 
 
-In a local directory (outside of container), add [run.sh](/run.sh), [core_calc.py](/core_calc.py), [instructions.txt](/HOST/instructions.txt), [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt).
+In a local directory (outside of the  container), add [run.sh](/run.sh), [core_calc.py](/core_calc.py), [instructions.txt](/HOST/instructions.txt), [wps_input.txt](/HOST/wps_input.txt) and [wrf_input.txt](/HOST/wrf_input.txt).
 
 **Change** `image_name="reduced_ubuntu_image"` in [run.sh](/run.sh) to match your *image_name*.
 
@@ -156,14 +163,14 @@ Valid nested domain sizes: 1 domains in use
 -----
 Do you want to proceed with the simulation (Y or N) -> CHECK ALL 3 files prior to continuing!
 ```
-**Warnings** can be indicative of fatal flaws in input files (except for dx and dy).
+**Warnings** can be indicative of fatal flaws in input files.
 ## Quick test
-For a quick test, try the input files, changing **max_dom=2** to 1 in `wps_input.txt` and `wrf_input.txt`. Simulation should take around 2-3 minutes and files should appear in the recently created `data` folder.
+For a quick test, try the input files, changing **max_dom=2** to 1 in `wps_input.txt` and `wrf_input.txt`. Simulation should take around 3-5 minutes and files should appear in the recently created `data` folder.
 
 ## Input files and host environment documentation
 For information about the input files or *Azure Cloud* setup, click [here](HOST/).
 
-## Internal functions documentation 
+## Additional function documentation 
 For information about the internal functions, purpose, future changes, [dockerfile](/CONFIGS/Dockerfile) and [core_calc.py](/core_calc.py) extra info click [here](CONFIGS/).
 
 ## Credits

@@ -1,7 +1,7 @@
 # Use Ubuntu 22.04 LTS as the base image
 FROM ubuntu:22.04
 
-LABEL Ricardo Faria <ricardo88faria@gmail.com>
+LABEL your_name <your_email@gmail.com>
 
 # Set environment variables to prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive \
