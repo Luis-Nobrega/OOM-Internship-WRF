@@ -182,7 +182,7 @@ ncview wrfout_d01_file
 ```
 And check if the result is similar to:
 
-![ncview](https://cirrus.ucsd.edu/ncview/)
+![ncview](https://cirrus.ucsd.edu/~pierce/docs/ncview.gif)
 
 Note that if you close any window with the `x` symbol, all other windows will close. Minimizing is the way.
 
