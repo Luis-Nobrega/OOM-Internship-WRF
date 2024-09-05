@@ -167,10 +167,10 @@ Do you want to proceed with the simulation (Y or N) -> CHECK ALL 3 files prior t
 ## Quick test
 For a quick test, try the input files, changing **max_dom=2** to 1 in `wps_input.txt` and `wrf_input.txt`. Simulation should take around 3-5 minutes and files should appear in the recently created `data` folder.
 
-## Input files and host environment documentation
+## Input files and host environment documentation ![Important](https://img.shields.io/badge/status-important-red)
 For information about the input files or *Azure Cloud* setup, click [here](HOST/).
 
-## Additional function documentation 
+## Additional function documentation ![Important](https://img.shields.io/badge/status-important-red)
 For information about the internal functions, purpose, future changes, [dockerfile](/CONFIGS/Dockerfile) and [core_calc.py](/core_calc.py) extra info click [here](CONFIGS/).
 
 ## Visualizing wrfout* files
