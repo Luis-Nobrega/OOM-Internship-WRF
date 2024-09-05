@@ -171,6 +171,6 @@ For information about the internal functions, purpose, future changes, [dockerfi
 - Luís Fernando Nóbrega
 - Ricardo Faria
 
-<b>A big thanks to:</b>
+<b>Thank you to:</b>
 - Jesus Reis
 - Rui Vieira
