@@ -52,8 +52,6 @@ Enter the container in interactive mode:
 docker run -it my_image_name
 ```
 
-![Danger](https://img.shields.io/badge/status-danger-red)
-
 Download and execute the proper installation script [WRF4.6.0_Install.bash](https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash). **This will take about an hour and 50 GB of space**! (Reduced to 30GB after deleting tar.gz). 
 ```
 bash WRF4.6.0_Install.bash
