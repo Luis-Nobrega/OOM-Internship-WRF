@@ -30,7 +30,7 @@ Updated geographical data can be downloaded to the `WPS_GEOG` folder from [here]
 - Provide the necessary input files: `instructions.txt`, `wps_input.txt` and `wrf_input.txt`;
 - Example files are listed below. Change `instructions.txt` **processors** keyword for an adequate value;
 
-Continue installation [process](https://github.com/Luis-Nobrega/OOM-Internship-WRF/blob/main/README.md#saving-the-image-after-editing).
+Continue installation [process](https://github.com/Luis-Nobrega/OOM-Internship-WRF#saving-the-image-after-editing-).
 
 ## Installation if Docker image wasn't provided ![Experimental](https://img.shields.io/badge/status-experimental-purple)
 
@@ -42,7 +42,9 @@ docker ps
 ```
 If not, install it [here](https://docs.docker.com/engine/install/).
 
-Start the docker container with the provided [Dockerfile](/CONFIGS/Dockerfile) in your desired directory. This may take some minutes.
+Start the docker container with the provided [Dockerfile](/CONFIGS/Dockerfile) in your desired directory. This may take some minutes. 
+
+Remember to change `LABEL` to have your name and email.
 ```
 docker build -t my_image_name . 
 ```
@@ -54,6 +56,9 @@ docker run -it my_image_name
 
 Download and execute the proper installation script [WRF4.6.0_Install.bash](https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash). **This will take about an hour and 50 GB of space**! (Reduced to 30GB after deleting tar.gz). 
 ```
+wget https://github.com/bakamotokatas/WRF-Install-Script/blob/master/WRF4.6.0_Install.bash
+
+#Caution before running
 bash WRF4.6.0_Install.bash
 ```
 
@@ -125,7 +130,7 @@ After entering the container in interactive mode, try to run `/.forecast.sh` in 
 
 If [forecast.sh](/CONFIGS/forecast.sh) **fails**, please consult [WPS](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/wps.html) or [WRF](https://www2.mmm.ucar.edu/wrf/users/wrf_users_guide/build/html/running_wrf.html) for detailed initialization steps. 
 
-Compare `forecast.sh` with the manual steps performed and search for missing actions (Please email on of the collaborators if that is the case).
+Compare `forecast.sh` with the manual steps performed and search for missing actions (Please email one of the collaborators if that is the case as this part hasn't been fully tested).
 
 ### Testing the image
 
